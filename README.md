@@ -6,7 +6,7 @@ It was partly inspired by the NODE.JS version http://socket.io/ and works in a s
 The PHP aspect of this library also make use of https://github.com/ghedipunk/PHP-Websockets as a base class.
 
 
-It's created and developed by Anthony Ogundipe, CEO of [DHTMLExtreme](http://www.dhtmlextreme.net).
+It's created and developed by Anthony Ogundipe, CEO of [DHTMLExtreme](http://www.africoders.com).
 
 ## Features
 * Ultra-fast communication between client and server.
@@ -32,12 +32,16 @@ From linux, you may want to use: nohup php server/socketio.php
 
 The server is meant to be running continuously so that it waits for connection, if you close the server, then the functionality will stop.
 
-After you have successfully started the server, you can run the client from the browser client/index.html
+After you have successfully started the server, you can run the client from the browser examples/basic/index.html or examples/advanced/index.html
 
 ```
 
+### Author
 
-<<<<<<< HEAD
+**Anthony Ogundipe** a.k.a dhtml
+
+Special thanks to <a href="https://www.facebook.com/wasconet">Adewale Wilson</a> (wasconet) for his contributions to this library.
+
 ## Community
 You can chat with us on facebook http://facebook.com/dhtml5 
 
