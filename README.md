@@ -36,6 +36,11 @@ After you have successfully started the server, you can run the client from the 
 
 ```
 
+### Support
+[Visit the project page](http://dhtml.github.io/phpsocket.io/) for documentation, configuration, and more advanced usage examples. 
+
+
+
 ### Author
 
 **Anthony Ogundipe** a.k.a dhtml
