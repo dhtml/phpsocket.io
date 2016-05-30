@@ -23,7 +23,7 @@
 	<script src="socket.js"></script>
 
     <script>
-	  var socket=$.websocket('ws://162.144.68.201:2000');
+	  var socket=$.websocket('ws://127.0.0.1:2000');
 	
       $('form').submit(function() {
         socket.emit('chat message', $('#m').val());

@@ -242,7 +242,7 @@ $(function() {
 });
   
 $(function() {
-socket=$.websocket('ws://162.144.68.201:2000');
+socket=$.websocket('ws://127.0.0.1:2000');
 
 
   // Socket events
