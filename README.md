@@ -39,7 +39,8 @@ After you have successfully started the server, you can run the client from the 
 ### Support
 [Visit the project page](http://dhtml.github.io/phpsocket.io/) for documentation, configuration, and more advanced usage examples. 
 
-
+### Android Integration
+If you are an android user, you can find out how to integrate this utility into your android project by checking out [Visit the project page](http://dhtml.github.io/phpsocket.io#android).
 
 ### Author
 
