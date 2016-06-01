@@ -55,3 +55,11 @@ You can chat with us on facebook http://facebook.com/dhtml5
 ## License
 
 `phpsocket.io`'s code in this repo uses the MIT license, see our `LICENSE` file.
+
+
+#### FIXES
+
+ * Refactored the classes into separate files
+ * Commented the codes heavily
+ * Included a test for the websockets according to https://github.com/ghedipunk/PHP-Websockets
+ * Updated the websockets dependencies
