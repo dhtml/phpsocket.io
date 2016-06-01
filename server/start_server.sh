@@ -9,7 +9,7 @@ appName=server.php
 
 if [ "${haySack/$appName}" = "$haySack" ] ; then
     echo "${appName} will be restarted now"
-	nohup php $SCR > error_log &
+	nohup php $SCR > nohop.log &
 else
   echo "${appName} is running properly"
 fi
