@@ -34,17 +34,17 @@ class PHPWebSockets  extends WebSocketServer{
 
 
     /**
-     *  usernames
+     *  numUsers
      *  
-     *  An object holding all available users
+     *  An integer holding number of users
      *
      *  @access public
      *
-     *  @var  object
+     *  @var  int
      *
      */
-	public $usernames=Array();
-
+	public $numUsers=0;
+	
 
     /**
      *  socketID
@@ -60,17 +60,16 @@ class PHPWebSockets  extends WebSocketServer{
 
 
     /**
-     *  numUsers
+     *  usernames
      *  
-     *  An integer holding number of users
+     *  An object holding all available users
      *
      *  @access public
      *
-     *  @var  int
+     *  @var  object
      *
      */
-	public $numUsers=0;
-	
+	public $usernames=Array();
 	
 	/**
     *  on
@@ -118,6 +117,38 @@ class PHPWebSockets  extends WebSocketServer{
 		$this->trigger($message->cmd,$message->data,$message->sender);
 		}
 	}
+	
+  /**
+  * getUserById
+  * 
+  * Fetches a user object via its id
+  * 
+  */
+  public function getUserById($userid) {
+    foreach ($this->users as $user) {
+      if ($user->id == $userid) {
+        return $user;
+      }
+    }
+    return null;
+  }
+
+  /**
+  * getUserByName
+  * 
+  * Fetches a user object by the Name
+  * 
+  */
+  public function getUserByName($username) {
+    foreach ($this->socketID as $uid=>$uname) {
+      if ($uname == $username) {
+		  $user=$this->getUserById($uid);
+        return $user;
+      }
+    }
+    return null;
+  }
+
 	
 	/**
     *  trigger
@@ -194,15 +225,15 @@ class PHPWebSockets  extends WebSocketServer{
 	}
 	
 	/**
-    *   send
+    *   push
     *  
 	*   send message to specified user only
 	*
-    *   @param  object  $user    The user object of the recipient
+    *   @param  object  $user    The user object of the recipient (or the user id)
     *   @param  string  $cmd     The command to be broadcasted e.g. chat
     *   @param  string  $data    (Optional) The data to be broadcasted along with the command e.g. hello world
 	*/
-	public function _send($user,$cmd,$data) {
+	public function push($user,$cmd,$data) {
 		$this->send($user, $this->cmdwrap($cmd,$data));
 	}
 	

@@ -1,6 +1,3 @@
 #!/bin/bash
 
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-SCR="$DIR/server.php"
-
-nohup php $SCR > nohup.log &
+nohup php server.php > nohup.log &

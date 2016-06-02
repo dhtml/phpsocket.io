@@ -66,7 +66,18 @@
 			
 			try { 
 				socket.send(message); 
-				//this.log('Sent: '+message); 
+			} catch(ex) { 
+				this.log(ex); 
+			}
+
+		};
+		
+		this.push=function(cmd,data,to) {
+			if (socket == null) {return;}
+			message=this.cmdwrap(cmd,{to:to,data:data},false);
+			
+			try { 
+				socket.send(message); 
 			} catch(ex) { 
 				this.log(ex); 
 			}
@@ -100,9 +111,11 @@
 					switch(obj.cmd) {
 					case "connect":
 					socket.user=obj.data;
+					//this.log("Connected");
 					break;
 					case "disconnect":
 					socket.user=null;
+					//this.log("Disconnected");
 					break;
 					case "close":
 					socket.user=null;

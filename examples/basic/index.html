@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
   <head>
-    <title>PHP Socket.IO chat</title>
+  <title>Basic Socket Chat Client</title>
     <style>
       * { margin: 0; padding: 0; box-sizing: border-box; }
       body { font: 13px Helvetica, Arial; }
@@ -19,8 +19,8 @@
       <input id="m" autocomplete="off" /><button>Send</button>
     </form>
 
-	<script src="jquery-1.10.2.min.js"></script>
-	<script src="socket.js"></script>
+	<script src="../js/jquery-1.10.2.min.js"></script>
+	<script src="../js/socket.js"></script>
 
     <script>
 	  var socket=$.websocket('ws://127.0.0.1:2000');

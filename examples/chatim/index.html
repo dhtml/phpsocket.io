@@ -1,0 +1,130 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <title>Socket Chat IM</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/ui-lightness/jquery-ui-1.9.2.custom.css" />
+
+	<script src="../js/jquery-1.10.2.min.js"></script>
+	<script src="../js/socket.js"></script>
+	
+    <script type="text/javascript" src="js/jquery-ui-1.9.2.custom.min.js"></script>
+    <link type="text/css" href="css/jquery.ui.chatbox.css" rel="stylesheet" />
+    <script type="text/javascript" src="js/jquery.ui.chatbox.js"></script>
+    <script type="text/javascript" src="js/javascript.fx.js"></script>
+    <script type="text/javascript" src="js/chatboxManager.js"></script>
+	
+
+	
+    <script type="text/javascript">
+	  // Initialize varibles
+	var socket;
+	var username;
+	var connected=false;
+    var idList = new Array();
+    var userlist = new Array();
+  
+  function chatwith(user) {
+  if(!contains.call(idList, user)) {idList.push(user);}
+  chatboxManager.addBox(user, {
+                                   title:user,
+                                   name:user
+                                   //you can add your own options too
+                               });
+  }
+  
+$(document).ready(function(){
+	  
+	  
+  $('.usernameInput').keydown(function (event) {
+	val=$.trim(this.value);
+	if (event.which === 13 && val!='') {
+	username=val;
+	
+	
+	socket.emit('add user', username);
+	}
+  });	  
+	  
+
+$('body').delegate("ul.online>li", "click", function() {
+	chatwith(this.innerHTML);
+});	  
+	  
+	  
+	  
+socket=$.websocket('ws://127.0.0.1:2000');
+
+/*
+Add names of current people logged in to list
+*/
+socket.on('user list', function(list){
+	userlist = $.parseJSON(list['users']);
+	var items = [];
+	var count=0;
+	for(var i = 0; i < userlist.length; i ++) {
+		if(userlist[i]==username) {continue;} //dont add name of current user to list
+       items.push('<li>' + userlist[i] + '</li>');
+	   count++;
+    }
+	
+	if(count==0) {
+       items.push('<li>Waiting for users to connect</li>');
+	}
+	
+	$('ul.online>li').remove();
+	$('ul.online').append( items.join('') );
+  });
+
+  socket.on('connect', function(user){
+	$('.usernameInput').focus();
+  });
+
+// Whenever the server emits 'login', log the login message
+socket.on('login', function (data) {
+    connected = true;
+	$('li.login').hide();
+	$('li.chat').show();
+	document.title="Hi "+username+"!";
+});
+
+// Whenever the server emits 'im user', signifying receiving a message
+socket.on('im user', function (data) {
+	console.log(data);
+	console.log(data['sender']);
+	
+	user=data['sender'];
+	msg=data['data'];
+	
+	chatwith(user);
+	$("#" + user).chatbox("option", "boxManager").addMsg(user, msg);
+
+});
+
+	  
+socket.listen();
+      });
+    </script>
+  </head>
+  <body>
+
+
+  
+  <ul class="pages">
+    <li class="chat page">
+		<h3>Online Users:</h3>
+		<ul class="online">
+		</ul>
+		<p>Click on a user to chat with that user</p>
+		
+    </li>
+    <li class="login page">
+      <div class="form">
+        <h3 class="title">What's your nickname?</h3>
+        <input class="usernameInput" type="text" maxlength="14">
+      </div>
+    </li>
+  </ul>
+  </body>
+</html>

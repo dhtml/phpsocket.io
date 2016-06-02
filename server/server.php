@@ -2,6 +2,7 @@
 <?php 
 include "lib/phpsockets.io.php";
 
+	
 /**
 * The port to run this socket on
 */ 
@@ -48,6 +49,12 @@ $socket->on("add user",function($socket,$username,$userid) {
 	'username'=>$socket->username,
 	'numUsers'=>$socket->numUsers
 	));
+
+	//broadcast the current user list e.g. tony,ayo - this is used in the chat im example
+	$socket->broadcast('user list', array(
+	    'users'=>json_encode(array_unique(array_values($socket->usernames)))
+	),true);
+	
 	
 	$socket->addedUser=true;
 
@@ -67,6 +74,33 @@ $socket->on('typing', function ($socket,$data) {
 	$socket->broadcast('typing', array(
 	'username'=>$socket->socketID[$socket->user->id],
 	));
+	
+});
+
+
+/**
+* a callback to send message to a specific user
+* this is used by the chat im example to handle a message being typed
+* 
+*   @param  object  $socket    The socket object of the current client
+*   @param  object  $data	   Data object sent containing keys - to and data
+* 
+*/
+$socket->on('im user', function ($socket,$data) {
+
+$sender=@$socket->socketID[$socket->user->id];
+if($sender!=null) {
+$to=$data->to;
+$data=$data->data;
+
+$re=$socket->getUserByName($to);
+
+$socket->push($re,'im user', array(
+ 'sender'=>$sender,
+ 'data'=>$data,
+));
+
+}
 	
 });
 
@@ -138,6 +172,12 @@ $socket->on("disconnect",function($socket,$data) {
 		'numUsers'=> $socket->numUsers
 		));
 		
+
+	  //broadcast the current user list e.g. tony,ayo - this is used in the chat im example
+	   $socket->broadcast('user list', array(
+	    'users'=>json_encode(array_unique(array_values($socket->usernames)))
+	   ),true);
+	
 	}
 
 });

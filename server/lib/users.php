@@ -6,6 +6,7 @@
 class WebSocketUser {
   public $socket;
   public $id;
+  public $name;
   public $headers = array();
   public $handshake = false;
 
